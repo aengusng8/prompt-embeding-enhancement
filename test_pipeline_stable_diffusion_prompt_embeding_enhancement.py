@@ -48,10 +48,20 @@ print("device:", device)
 pipe.enable_attention_slicing()  # TODO: might remove this
 
 for prompt, image_name in prompt_image_pairs[4:5]:
-    print("prompt:", prompt) # TODO: remove this
+    print("prompt:", prompt)
     image = cv2.imread(os.path.join(images_folder_path, image_name))
     image = torch.from_numpy(image).permute(2, 0, 1).unsqueeze(0).float().to(device)
-    print("image shape:", image.shape) # TODO: remove this
-    out = pipe.run_prompt_embeding_enhancement(
-        image, prompt, n_epochs=1, batch_size=1, reconstruct="latent"
+    print("image shape:", image.shape)  # TODO: remove this
+    best_prompt_embeds, result = pipe.run_prompt_embeding_enhancement(
+        image, prompt, n_epochs=2, batch_size=1, reconstruct_on="latent", visualize=True
     )
+
+# result = {
+#     "generated_images_on_epoch": [
+#         torch.rand(1, 4, 64, 64).to(device),
+#         torch.rand(1, 4, 64, 64).to(device),
+#     ]
+# }
+
+out = pipe.visualize_prompt_embeding_enhancement(result, reconstruct_on="latent")
+print("out", out)
