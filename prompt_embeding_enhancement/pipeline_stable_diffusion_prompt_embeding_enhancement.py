@@ -724,8 +724,6 @@ class StableDiffusionPromptEmbedingEnhancementPipeline(DiffusionPipeline):
                         callback(i, t, latents)
 
                 
-                break # BUG: remove this line to run the full loop
-
         if output_type == "latent":
             image = latents
         elif output_type == "image":
