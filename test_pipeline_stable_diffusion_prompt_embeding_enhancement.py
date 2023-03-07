@@ -63,5 +63,7 @@ for prompt, image_name in prompt_image_pairs[4:5]:
 #     ]
 # }
 
-out = pipe.visualize_prompt_embeding_enhancement(result, reconstruct_on="latent")
-print("out", out)
+pil_images = pipe.visualize_prompt_embeding_enhancement(result, reconstruct_on="latent")
+# save images
+for i, pil_image in enumerate(pil_images):
+    pil_image.save(os.path.join("results", f"result_{i}.png"))
